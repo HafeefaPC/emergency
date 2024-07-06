@@ -1,66 +1,68 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+// Function to send an SMS using the url_launcher package with a predefined message
+void _sendingSMS() async {
+  // Define the phone number and the message body
+  const String phoneNumber = '7356027036';
+  const String message = 'I am in danger, help me';
 
-class SOSButton extends StatefulWidget {
-  const SOSButton({Key? key}) : super(key: key);
+  // Encode the message for URL format
+  var url = Uri.parse('sms:$phoneNumber?body=${Uri.encodeComponent(message)}');
 
-  @override
-  State<SOSButton> createState() => _SOSButtonState();
+  if (await canLaunchUrl(url)) {
+    await launchUrl(url);
+  } else {
+    throw 'Could not launch $url';
+  }
 }
 
-class _SOSButtonState extends State<SOSButton> {
-  // String message = "I am in danger, please contact me back!";
-  // List<String> recipients = ["+918547046415", "+917736761186", "+917994995080"];
-
-  // String _resultMessage = "";
-
-  // void _sendSMS(String message, List<String> recipients) async {
-  //   try {
-  //     String _result = await sendSMS(message: message, recipients: recipients);
-  //     setState(() {
-  //       _resultMessage = "SMS sent successfully: $_result";
-  //     });
-  //   } catch (error) {
-  //     setState(() {
-  //       _resultMessage = "Error sending SMS: $error";
-  //     });
-  //   }
-  // }
+class SOSButton extends StatelessWidget {
+  const SOSButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffFAF9F6),
       appBar: AppBar(
-        title: Text("Send SOS SMS"),
-        centerTitle: true,
-        backgroundColor:Colors.redAccent[100],
+        title: const Text('SOS Emergency'),
+        backgroundColor: Colors.redAccent,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton.icon(
-              onPressed: () {
-               
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.teal[700],
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.warning,
+                color: Colors.red,
+                size: 100.0,
+              ),
+              SizedBox(height: 20.0),
+              const Text(
+                'Emergency SOS',
+                style: TextStyle(
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              
-              label: Text(
-                " SOS message sented to your emergency contacts",
-                style: TextStyle(color: Colors.white, fontSize: 17.0),
+              SizedBox(height: 20.0),
+              ElevatedButton.icon(
+                onPressed: _sendingSMS,
+                icon: Icon(Icons.sms, color: Colors.white),
+                label: Text('Send SMS'),
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.redAccent, // Button text color
+                  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+                  textStyle: TextStyle(fontSize: 18.0),
+                ),
               ),
-            ),
-            SizedBox(height: 20),
-            // Text(_resultMessage),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 }
+
+
