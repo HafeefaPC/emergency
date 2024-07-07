@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:ambulance_call/screens/ambulance.dart';
-import 'package:ambulance_call/screens/sos.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'ambulance.dart';
 import 'doctorpage.dart';
 import 'firstaid.dart';
 import 'poilce.dart';
-import 'user_page.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,6 +14,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Emergency Services'),
+        backgroundColor: Colors.redAccent,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -58,23 +59,22 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 16), // Space between grid and SOS button
-            ElevatedButton.icon(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SOSButton()),
-                );
-              },
-              icon: Icon(Icons.dangerous),
-              label: Text('SOS'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-                padding: EdgeInsets.symmetric(vertical: 16, horizontal: 32),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
+            Center(
+              child: ElevatedButton(
+                onPressed: _sendingSMS,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  minimumSize: Size(160, 160), // Diameter of the circle
+                  shape: CircleBorder(), // Circular shape
+                ),
+                child: Icon(
+                  Icons.dangerous,
+                  size: 70, // Adjust icon size as needed
+                  color: Colors.white,
                 ),
               ),
             ),
+            SizedBox(height: 100,)
           ],
         ),
       ),
@@ -117,4 +117,20 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
+  void _sendingSMS() async {
+   
+    const String phoneNumber = '7356027036';
+    const String message = 'I am in danger, help me';
+
+    var url = Uri.parse('sms:$phoneNumber?body=${Uri.encodeComponent(message)}');
+
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 }
+
+

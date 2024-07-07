@@ -102,7 +102,7 @@ class _doctorState extends State<doctor> {
 
     Fluttertoast.showToast(msg: 'Added successfully');
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return const doctorpage();
+      return DoctorPage();
     }));
   }
 }

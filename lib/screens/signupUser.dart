@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:lottie/lottie.dart';
 import '../database/function.dart';
 import '../database/model.dart'; // Assuming your model.dart file is correctly located and imported
 import 'login.dart';
@@ -23,7 +24,7 @@ class _SignUpUserState extends State<SignUpUser> {
 
     if (username.isNotEmpty && password.isNotEmpty && phoneNumber.isNotEmpty) {
       User newUser = User(name: username, password: password, phoneNumber: phoneNumber);
-      
+
       try {
         await addUser(newUser);
         print('signup successful'); // Wait for addUser to complete
@@ -62,57 +63,51 @@ class _SignUpUserState extends State<SignUpUser> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(28.0),
+          padding: const EdgeInsets.symmetric(horizontal: 28.0, vertical: 16.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Container(
-                height: 50,
-                child: TextFormField(
-                  controller: _usernameController,
-                  decoration: const InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(),
-                    labelText: 'Username',
-                  ),
+             
+              TextFormField(
+                controller: _usernameController,
+                decoration: const InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(),
+                  labelText: 'Username',
                 ),
               ),
-              const SizedBox(height: 20),
-              Container(
-                height: 50,
-                child: TextFormField(
-                  controller: _phoneNumberController,
-                  decoration: const InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(),
-                    labelText: 'Phone Number',
-                  ),
+              const SizedBox(height: 12), // Adjust the spacing between fields
+              TextFormField(
+                controller: _phoneNumberController,
+                decoration: const InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(),
+                  labelText: 'Phone Number',
                 ),
               ),
-              const SizedBox(height: 20),
-              Container(
-                height: 50,
-                child: TextFormField(
-                  controller: _passwordController,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(),
-                    labelText: 'Password',
-                  ),
+              const SizedBox(height: 12), // Adjust the spacing between fields
+              TextFormField(
+                controller: _passwordController,
+                obscureText: true,
+                decoration: const InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(),
+                  labelText: 'Password',
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 24), // Adjust the spacing before the button
               ElevatedButton(
-                onPressed: () {
-                  validate();
-                },
+                onPressed: validate,
                 child: const Text(
                   "Sign Up",
-                  style: TextStyle(color: Colors.green, fontSize: 15),
+                  style: TextStyle(color: Colors.redAccent, fontSize: 15),
+                ),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 14.0),
                 ),
               ),
             ],
@@ -122,3 +117,4 @@ class _SignUpUserState extends State<SignUpUser> {
     );
   }
 }
+

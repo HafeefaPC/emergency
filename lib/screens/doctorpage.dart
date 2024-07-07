@@ -53,6 +53,7 @@ class _DriverSecPageState extends State<DriverSecPage> {
         itemBuilder: (context, index) {
           Doctor doctor = doctors[index];
           return ListTile(
+            leading: _buildDoctorAvatar(doctor), // Circle Avatar with status
             title: Text(doctor.username),
             subtitle: Text(doctor.location),
             trailing: Icon(Icons.phone),
@@ -66,6 +67,32 @@ class _DriverSecPageState extends State<DriverSecPage> {
     }
   }
 
+  Widget _buildDoctorAvatar(Doctor doctor) {
+    return Stack(
+      children: [
+        CircleAvatar(
+          radius: 30.0,
+          backgroundColor: Colors.grey[300], // Background color for the avatar
+          child: Text(
+            doctor.username[0].toUpperCase(), // Display the first letter of the username
+            style: TextStyle(
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
+        ),
+        Positioned(
+          right: 4.0,
+          bottom: 4.0,
+          child: CircleAvatar(
+            radius: 8.0,
+            backgroundColor: doctor.onlineStatus ? Colors.green : Colors.red, // Green if online, red if offline
+          ),
+        ),
+      ],
+    );
+  }
 
   void _makePhoneCall(String phoneNumber) async {
     final Uri launchUri = Uri(
@@ -75,3 +102,5 @@ class _DriverSecPageState extends State<DriverSecPage> {
     await launchUrl(launchUri);
   }
 }
+
+

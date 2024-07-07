@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
       } else if (userType == 'Doctor') {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const doctorpage()),
+          MaterialPageRoute(builder: (context) => const DoctorPage()),
         );
       }
     } else {

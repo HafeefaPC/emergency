@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
         Fluttertoast.showToast(msg: "Login successfully");
 
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-          return doctorpage(); // Replace with your doctor's landing page
+          return DoctorPage(); // Replace with your doctor's landing page
         }));
       } else {
         Fluttertoast.showToast(msg: "Invalid credentials");

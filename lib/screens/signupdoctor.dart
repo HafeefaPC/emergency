@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:lottie/lottie.dart';
 import '../database/model.dart';
 import '../database/function.dart';
 import 'login.dart';
@@ -30,19 +31,23 @@ class _SignUpDoctorState extends State<SignUpDoctor> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+          
             _buildTextField(_usernameController, 'Username'),
-            SizedBox(height: 16),
+             const SizedBox(height: 12),
             _buildTextField(_passwordController, 'Password', isPassword: true),
-            SizedBox(height: 16),
+             const SizedBox(height: 12),
             _buildTextField(_locationController, 'Location'),
-            SizedBox(height: 16),
+           const SizedBox(height: 12),
             _buildTextField(_phoneNumberController, 'Phone Number'),
-            SizedBox(height: 20),
+             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
                 signUpAsDoctor();
               },
-              child: Text('Sign Up'),
+               child: const Text(
+                  "Sign Up",
+                  style: TextStyle(color: Colors.redAccent, fontSize: 15),
+                ),
             ),
           ],
         ),
